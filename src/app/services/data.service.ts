@@ -9,7 +9,7 @@ export class DataService {
     usuarios: IUsuario[] = [
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -21,7 +21,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -33,7 +33,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -45,7 +45,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -57,7 +57,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -69,7 +69,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -81,7 +81,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',
@@ -93,7 +93,7 @@ export class DataService {
         },
         {
             nome: 'Hero',
-            sobrenome: 'start',
+            sobreNome: 'start',
             telefone: '+55',
             email: 'heromail@mail.com',
             idioma: 'ing',

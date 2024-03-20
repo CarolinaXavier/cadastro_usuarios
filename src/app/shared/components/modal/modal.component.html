@@ -1,21 +1,21 @@
 <button #modal type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#modal"></button>
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content px-2 py-1">
-            <div class="modal-header border-0 pb-1">
-                <h1 *ngIf="child" class="modal-title fs-4" id="modalLabel">
-                    {{ child.inputs.data.titulo }}
-                </h1>
-                <button type="button" class="btn-close" title="Fechar" data-bs-dismiss="modal"
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-3 rounded-4 border-0 shadow">
+            <div class="modal-header border-0">
+                <div>
+                    <h1 *ngIf="child" class="modal-title fs-4 mb-2" id="modalLabel">
+                        {{ child.inputs.data.titulo }}
+                    </h1>
+                    <p *ngIf="child" class="text-body-tertiary">
+                        {{ child.inputs.data.subTitulo }}
+                    </p>
+                </div>
+                <button type="button" class="btn-close align-self-start pt-3" title="Fechar" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <div class="modal-body position-relative">
-                <p *ngIf="child" class="position-absolute top-0 text-body-tertiary">
-                    {{ child.inputs.data.subTitulo }}
-                </p>
-                <div class="py-5">
-                    <ng-container *ngComponentOutlet="child?.component; inputs: child?.inputs" />
-                </div>
+            <div class="modal-body">
+                <ng-container *ngComponentOutlet="child?.component; inputs: child?.inputs" />
             </div>
         </div>
     </div>

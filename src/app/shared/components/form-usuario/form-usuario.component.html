@@ -1,1 +1,93 @@
-<p>form-usuario works!</p>
+<form [formGroup]="form" (submit)="onSubmit()">
+    <div class="row">
+        <div class="col-lg-6 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="nome">Nome</label>
+                <input class="form-control bg-white-" type="text" formControlName="nome"
+                    [ngClass]="formService.class(form.controls['nome'], 'is-valid', 'is-invalid')" />
+            </div>
+        </div>
+        <div class="col-lg-6 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="sobreNome">Sobrenome</label>
+                <input class="form-control bg-white-" type="text" formControlName="sobreNome"
+                    [ngClass]="formService.class(form.controls['sobreNome'], 'is-valid', 'is-invalid')" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="telefone">Telefone<span
+                        class="text-body-tertiary fst-italic ms-1">- Opicional</span></label>
+                <input class="form-control bg-white-" type="text" formControlName="telefone"
+                    [ngClass]="formService.class(form.controls['telefone'], 'is-valid', 'is-invalid')" />
+            </div>
+        </div>
+        <div class="col-lg-6 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="email">E-mail corporativo</label>
+                <div class="input-group">
+                    <div class="input-group-text"
+                        [ngClass]="formService.class(form.controls['email'], 'border-success', 'border-danger')">
+                        <i class="bi bi-envelope text-body-tertiary"></i>
+                    </div>
+                    <input class="form-control border-start-0" type="text" formControlName="email"
+                        [ngClass]="formService.class(form.controls['email'], 'is-valid', 'is-invalid')" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="perfis">Perfil de acesso</label>
+                <input class="form-control bg-white-" type="text" formControlName="perfis"
+                    [ngClass]="formService.class(form.controls['perfis'], 'is-valid', 'is-invalid')" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="idioma">Idioma</label>
+                <input class="form-control bg-white-" type="text" formControlName="idioma"
+                    [ngClass]="formService.class(form.controls['idioma'], 'is-valid', 'is-invalid')" />
+            </div>
+        </div>
+        <div class="col-lg-6 mb-3 px-2">
+            <div class="form-group">
+                <label class="small fw-medium mb-1" for="contatoPreferencial">Contato preferencial<span
+                        class="text-body-tertiary fst-italic ms-1">- Opicional</span></label>
+                <div
+                    class="form-control border-0 px-0 text-body d-flex justify-content-between flex-column flex-lg-row">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" formControlName="contatoPreferencial"
+                            id="inlineRadio1" value="email">
+                        <label class="form-check-label" for="inlineRadio1">E-mail</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" formControlName="contatoPreferencial"
+                            id="inlineRadio2" value="telefone">
+                        <label class="form-check-label" for="inlineRadio2">Telefone</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" formControlName="contatoPreferencial"
+                            id="inlineRadio3" value="todos">
+                        <label class="form-check-label" for="inlineRadio3">Todos</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 mt-3 px-2">
+            <button type="button" class="btn btn-outline-primary w-100" (click)="closeModal()">Fechar</button>
+        </div>
+        <div class="col-lg-6 mt-3 px-2">
+            <button type="submit" class="btn btn-primary w-100">Envia convite</button>
+        </div>
+    </div>
+
+    <!-- <pre>{{form.value | json}}</pre> -->
+</form>

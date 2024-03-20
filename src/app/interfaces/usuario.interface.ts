@@ -1,11 +1,11 @@
 export interface IUsuario {
     nome: string;
-    sobrenome: string;
+    sobreNome: string;
     telefone: string;
     email: string;
     perfis: string[];
     idioma: string;
-    contatoPreferencial: string;
+    contatoPreferencial: 'email' | 'telefone' | 'todos';
 
     status: 'ativo' | 'pendente' | 'bloqueado';
     criadoEm: string;

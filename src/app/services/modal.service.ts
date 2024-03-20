@@ -7,13 +7,13 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ModalService {
 
-    private child: Subject<IModalChild | null> = new Subject();
+    private child: Subject<IModalChild | false> = new Subject();
 
-    changes(): Observable<IModalChild | null> {
+    changes(): Observable<IModalChild | false> {
         return this.child.asObservable();
     }
 
-    open(child: IModalChild | null) {
+    open(child: IModalChild | false) {
         this.child.next(child);
     }
 }

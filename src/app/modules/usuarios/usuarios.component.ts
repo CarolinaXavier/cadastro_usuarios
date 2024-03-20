@@ -37,6 +37,10 @@ export class UsuariosComponent {
         this.store.dispatch(
             loadData({ filtro: { nomeEmail: '', filtro: '' } })
         );
+
+        setTimeout(() => {
+            this.usuarioAdd();
+        }, 100);
     }
 
     protected usuarioAdd() {

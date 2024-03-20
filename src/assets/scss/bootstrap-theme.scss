@@ -36,4 +36,17 @@ $input-color: rgba(var(--bs-body-color-rgb), 0.6) !default;
 }
 }
 
+.btn.btn-outline-primary {
+    color: var(--bs-primary);
+    border-color: transparent !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--bs-primary) !important;
+        border-color: var(--bs-primary) !important;
+        background-color: var(--bs-body) !important;
+    }
+}
+
 @import "node_modules/bootstrap/scss/bootstrap";
