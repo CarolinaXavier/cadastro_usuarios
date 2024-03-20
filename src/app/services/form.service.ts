@@ -36,13 +36,21 @@ export class FormService {
         });
     }
 
-    class(control: AbstractControl, valid: string, invalid: string) {
-        return {
-            [valid]:
-                !this.handlerInvalidTouched(control) &&
-                this.handlerValidTouched(control),
-            [invalid]: this.handlerInvalidTouched(control),
-        };
+    class(control: AbstractControl, invalid: string, valid?: string) {
+        if (valid) {
+            return {
+                [valid]:
+                    !this.handlerInvalidTouched(control) &&
+                    this.handlerValidTouched(control),
+                [invalid]: this.handlerInvalidTouched(control),
+            };
+        } else {
+            return {
+
+                [invalid]: this.handlerInvalidTouched(control),
+            };
+        }
+
     }
 
     private handlerInvalidTouched(control: AbstractControl) {
