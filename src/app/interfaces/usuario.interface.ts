@@ -6,4 +6,8 @@ export interface IUsuario {
     perfis: string[];
     idioma: string;
     contatoPreferencial: string;
+
+    status: 'ativo' | 'pendente' | 'bloqueado';
+    criadoEm: string;
+    ultimoAcesso: string;
 }
