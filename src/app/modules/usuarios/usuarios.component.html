@@ -1,14 +1,17 @@
 <section class="container-fluid px-0 py-1 py-sm-2 py-md-3 py-lg-4 py-xl-5">
     <div class="container-lg p-4" *ngIf="data$ | async as data">
-        <h1 class="fs-4 mb-4">Usuários</h1>
+        <h1 class="fs-5 mb-5">Usuários</h1>
         <div class="row">
             <div class="col-lg-6">
                 <form [formGroup]="form">
                     <div class="row">
                         <div class="col-lg-8 mb-4">
-                            <div class="form-group">
-                                <input type="text" class="form-control bg-white" formControlName="nomeEmail"
-                                    placeholder="Pesquise pelo nome ou e-mail" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white border-end-0"
+                                    formControlName="nomeEmail" placeholder="Pesquise pelo nome ou e-mail" />
+                                <div class="input-group-text bg-white">
+                                    <i class="bi bi-search"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-4">
@@ -28,37 +31,47 @@
                     usuário</button>
             </div>
 
-            <div>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col">
+            <div class="col-12">
+                <ul class="list-group rounded-3">
+                    <li class="list-group-item p-3 bg-white">
+                        <div class="row flex-column flex-lg-row">
+                            <div class="align-self-center col mb-1 mb-lg-0">
                                 <span class="small fw-medium">Usuários</span>
                             </div>
-                            <div class="col">
+                            <div class="align-self-center col mb-1 mb-lg-0">
                                 <span class="small fw-medium">Status</span>
                             </div>
-                            <div class="col">
+                            <div class="align-self-center col mb-1 mb-lg-0">
                                 <span class="small fw-medium">Data de criação</span>
                             </div>
-                            <div class="col">
+                            <div class="align-self-center col mb-1 mb-lg-0">
                                 <span class="small fw-medium">Último acesso</span>
+                            </div>
+                            <div class="align-self-center col mb-0 mb-lg-0 col-lg-1">
+                                <span class="small fw-medium"></span>
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item" *ngFor="let usuario of data.result.documentos">
-                        <div class="row">
-                            <div class="col">
-                                <span>{{usuario.nome}}</span>
+                    <li class="list-group-item px-3 py-4 py-lg-2"
+                        *ngFor="let usuario of data.result.documentos; even as even" [ngClass]="{ 'bg-white' : even}">
+                        <div class="row flex-column flex-lg-row">
+                            <div class="align-self-center col mb-1 mb-lg-0">
+                                <app-card-mini-usuario [usuario]="usuario" />
                             </div>
-                            <div class="col">
+                            <div class="align-self-center col mb-1 mb-lg-0">
                                 <span>{{usuario.status}}</span>
                             </div>
-                            <div class="col">
+                            <div class="align-self-center col mb-1 mb-lg-0">
                                 <span>{{usuario.criadoEm | date: 'shortDate'}}</span>
                             </div>
-                            <div class="col">
-                                <span>{{usuario.ultimoAcesso | date: 'shortDate'}}</span>
+                            <div class="align-self-center col mb-1 mb-lg-0">
+                                <span>{{usuario.ultimoAcesso | date: 'shortDate'}} às {{usuario.ultimoAcesso | date:
+                                    'shortTime'}}h</span>
+                            </div>
+                            <div class="align-self-center col mb-0 mb-lg-0 col-lg-1 text-end">
+                                <button class="btn btn-link p-0 text-body-tertiary">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
                             </div>
                         </div>
                     </li>

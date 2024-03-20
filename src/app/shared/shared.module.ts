@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ModalComponent } from './components/modal/modal.component';
 import { FormUsuarioComponent } from './components/form-usuario/form-usuario.component';
-
-
+import { CardTestimonyComponent } from './components/card-mini-usuario/card-mini-usuario.component';
 
 @NgModule({
   declarations: [
     ModalComponent,
-    FormUsuarioComponent
+    FormUsuarioComponent,
+    CardTestimonyComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgOptimizedImage
   ],
-  exports: [ModalComponent]
+  exports: [ModalComponent, CardTestimonyComponent]
 })
 export class SharedModule { }
