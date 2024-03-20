@@ -20,13 +20,13 @@
             <div class="form-group">
                 <label class="small fw-medium mb-1" for="telefone">Telefone<span
                         class="text-body-tertiary fst-italic ms-1">- Opicional</span></label>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" [formGroup]="formTelefone">
                     <button type="button"
                         class="btn btn-outline-secondary dropdown-toggle bg-transparent text-body-tertiary px-2 border-end-0 border border-opacity-25 d-flex align-items-center justify-content-center"
                         type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                         <div class="container-fluid pais-telefone-flag-bg rounded-circle shadow me-2"
-                            style="--bg-image: url({{ form.value.paisCodeTelefone | flagPaisByTelefoneCode }});">
+                            style="--bg-image: url({{ formTelefone.value.codigoDoPais | flagPaisByTelefoneCode }});">
                         </div>
 
                     </button>
@@ -37,8 +37,8 @@
                     </ul>
                     <input
                         class="form-control text-body border-start-0 border-end-0 border border-opacity-25 px-0 shadow-none "
-                        type="text" readonly formControlName="paisCodeTelefone" style="width: 1rem;">
-                    <input class="form-control text-body border-start-0 w-auto" type="text" formControlName="telefone"
+                        type="text" readonly formControlName="codigoDoPais" style="width: 1rem;">
+                    <input class="form-control text-body border-start-0 w-auto" type="text" formControlName="numero"
                         mask="(00) 0000-0000" />
 
                 </div>

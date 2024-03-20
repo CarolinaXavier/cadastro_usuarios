@@ -10,7 +10,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -22,7 +25,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -34,7 +40,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -46,7 +55,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -58,7 +70,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -70,7 +85,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -82,7 +100,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
@@ -94,7 +115,10 @@ export class DataService {
         {
             nome: 'Hero',
             sobreNome: 'start',
-            telefone: '+55',
+            telefone: {
+                codigoDoPais: '+55',
+                numero: '9192935806'
+            },
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',

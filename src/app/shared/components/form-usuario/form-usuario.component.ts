@@ -42,8 +42,10 @@ export class FormUsuarioComponent {
                 Validators.required,
                 CustomValidators.notEmpty,
             ]),
-            paisCodeTelefone: new FormControl(this.utilPaisCodeTelefone[0].code, []),
-            telefone: new FormControl(null, []),
+            telefone: this.fb.group({
+                codigoDoPais: new FormControl(this.utilPaisCodeTelefone[0].code, []),
+                numero: new FormControl(null, []),
+            }),
             email: new FormControl(null, [
                 Validators.required,
                 CustomValidators.notEmpty,
@@ -58,12 +60,25 @@ export class FormUsuarioComponent {
         });
     }
 
+    get formTelefone(): FormGroup {
+        return this.form.controls['telefone'] as FormGroup;
+    }
+
     dropdownChange(event: any) {
         this.form.patchValue({ paisCodeTelefone: event.target.id });
     }
 
     onSubmit() {
         if (this.formService.valid(this.form)) {
+            const novoUsuario: IUsuario = Object.assign(
+                {
+                    status: 'ativo',
+                    criadoEm: new Date(),
+                    ultimoAcesso: new Date(),
+                },
+                this.form.value
+            );
+            
         } else {
             console.error(`from: ${this.form.status}`);
         }

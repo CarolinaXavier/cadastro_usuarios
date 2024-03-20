@@ -1,7 +1,10 @@
 export interface IUsuario {
     nome: string;
     sobreNome: string;
-    telefone: string;
+    telefone: {
+        codigoDoPais: string;
+        numero: string;
+    };
     email: string;
     perfis: string[];
     idioma: string;
