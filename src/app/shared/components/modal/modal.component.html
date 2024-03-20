@@ -1,0 +1,22 @@
+<button #modal type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#modal"></button>
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content px-2 py-1">
+            <div class="modal-header border-0 pb-1">
+                <h1 *ngIf="child" class="modal-title fs-4" id="modalLabel">
+                    {{ child.inputs.data.titulo }}
+                </h1>
+                <button type="button" class="btn-close" title="Fechar" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body position-relative">
+                <p *ngIf="child" class="position-absolute top-0 text-body-secondary">
+                    {{ child.inputs.data.subTitulo }}
+                </p>
+                <div class="py-5">
+                    <ng-container *ngComponentOutlet="child?.component; inputs: child?.inputs" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
