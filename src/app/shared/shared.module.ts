@@ -7,6 +7,7 @@ import { FlagPaisByTelefoneCodePipe } from './pipes/flag-pais-by-telefone-code.p
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmaAcaoComponent } from './components/confirma-acao/confirma-acao.component';
+import { NavPaginacaoComponent } from './components/nav-paginacao/nav-paginacao.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ConfirmaAcaoComponent } from './components/confirma-acao/confirma-acao.
     CardTestimonyComponent,
     FlagPaisByTelefoneCodePipe,
     ConfirmaAcaoComponent,
+    NavPaginacaoComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,7 @@ import { ConfirmaAcaoComponent } from './components/confirma-acao/confirma-acao.
     NgxMaskPipe,
     NgSelectModule,
   ],
-  exports: [CardTestimonyComponent, FlagPaisByTelefoneCodePipe],
+  exports: [CardTestimonyComponent, FlagPaisByTelefoneCodePipe, NavPaginacaoComponent],
   providers: [provideNgxMask()],
 })
 export class SharedModule { }

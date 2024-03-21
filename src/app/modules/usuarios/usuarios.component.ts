@@ -144,8 +144,13 @@ export class UsuariosComponent {
         return filtros;
     }
 
-    onControlePagina() {
+/*     onControlePagina() {
         this.paginacaoConfigService.setConfig({ pagina: 2 })
+    } */
+
+    navegarParaPagina(event: any){
+        console.log(event)
+        this.paginacaoConfigService.setConfig({ pagina: event })
     }
 
     onAdd() {
