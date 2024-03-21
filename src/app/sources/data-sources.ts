@@ -29,27 +29,27 @@ export const dataSources: IUsuario[] = [
         idioma: 'es',
         contatoPreferencial: 'email',
         perfis: ['supervisor'],
-        status: 'ativo',
+        status: 'pendente',
         criadoEm: '2024-02-15T10:30:45.123+00:00',
         ultimoAcesso: '2024-03-10T18:20:15.567+00:00',
     },
     {
         _id: '2',
-        nome: 'Jack',
-        sobreNome: 'Power',
+        nome: 'Jane',
+        sobreNome: 'Doe',
         telefone: {
             codigoDoPais: '+55',
             numero: '876543210',
         },
-        email: 'jackpower@mail.com',
+        email: 'janedoe@mail.com',
         idioma: 'pt-BR',
         contatoPreferencial: 'telefone',
         perfis: ['supervisor'],
-        status: 'ativo',
+        status: 'bloqueado',
         criadoEm: '2024-02-28T14:45:30.987+00:00',
         ultimoAcesso: '2024-03-18T09:12:34.876+00:00',
     },
-    {
+    /* {
         _id: '3',
         nome: 'Maria',
         sobreNome: 'Silva',
@@ -160,6 +160,6 @@ export const dataSources: IUsuario[] = [
         status: 'ativo',
         criadoEm: '2024-03-20T09:45:23.543+00:00',
         ultimoAcesso: '2024-03-20T09:45:23.543+00:00',
-    },
-    
+    }, */
+
 ];

@@ -67,15 +67,9 @@ export class DataService {
     list(search: any): Observable<any> {
         return new Observable((obs) => {
             try {
-                obs.next({
-                    documentos: this.usuarios,
-                    totalDocumentos: 0,
-                    limite: 0,
-                    totalPaginas: 0,
-                    pagina: 0,
-                    anterior: false,
-                    proxima: false,
-                });
+                obs.next(
+                    this.usuarios,
+                );
             } catch {
                 obs.error({
                     message: 'erro!',

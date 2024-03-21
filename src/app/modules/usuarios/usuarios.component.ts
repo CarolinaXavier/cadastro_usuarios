@@ -1,18 +1,35 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import {
     ModalDismissReasons,
     NgbModal,
     NgbModalOptions,
     NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subject, merge, switchMap, tap } from 'rxjs';
-import { IData } from 'src/app/interfaces/data.interface';
+import {
+    Observable,
+    Subject,
+    debounceTime,
+    distinctUntilChanged,
+    merge,
+    switchMap,
+    tap,
+} from 'rxjs';
+import { CustomValidators } from 'src/app/form-validators/custom.validator';
+import { IPaginacao } from 'src/app/interfaces/paginacao.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { DataService } from 'src/app/services/data.service';
 import { ConfirmaAcaoComponent } from 'src/app/shared/components/confirma-acao/confirma-acao.component';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
+import { filtrarArrayMultiKeyFunction } from 'src/app/utils/filtrar-array-multi-key-.function';
+
+import { obterPaginado } from 'src/app/utils/obter-paginado.function';
+import { removeAcentuacao } from 'src/app/utils/remove-acentuacao.function';
 
 @Component({
     selector: 'app-usuarios',
@@ -20,13 +37,16 @@ import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/for
     styleUrls: ['./usuarios.component.scss'],
 })
 export class UsuariosComponent {
-    data$!: Observable<IData>;
-    dataInit$!: Observable<IData>;
-    dataUpdate$!: Observable<IData>;
+    data$!: Observable<IUsuario[]>;
+    dataInit$!: Observable<IUsuario[]>;
+    dataUpdate$!: Observable<IUsuario[]>;
 
     subjectUpdate: Subject<any> = new Subject<any>();
 
     form!: FormGroup;
+
+    paginacao!: IPaginacao;
+    private data!: any;
 
     modalOptions: NgbModalOptions = {
         ariaLabelledBy: 'modal-basic-title',
@@ -46,16 +66,53 @@ export class UsuariosComponent {
                 return this.dataService.list({}).pipe();
             })
         );
-        this.data$ = merge(this.dataInit$, this.dataUpdate$).pipe(tap(console.log));
+
+        this.data$ = merge(this.dataInit$, this.dataUpdate$).pipe(
+            tap((data) => {
+                this.data = data;
+                this.carregarPaginacao(1, 10);
+            })
+        );
 
         this.form = this.fb.group({
-            nomeEmail: [null],
-            filtro: [null],
+            nome: ['', [Validators.required, CustomValidators.notEmpty]],
+            status: ['', [Validators.required]],
         });
 
-        this.form.valueChanges.subscribe((values) => {
-            console.log(values);
-        });
+        this.form.valueChanges
+            .pipe(debounceTime(500), distinctUntilChanged())
+            .subscribe((values: any) => {
+                this.carregarPaginacao(1, 10);
+            });
+    }
+
+    carregarPaginacao(pagina: number, limite: number): void {
+        this.paginacao = obterPaginado(
+            filtrarArrayMultiKeyFunction(this.data, this.extraiFiltros()),
+            pagina,
+            limite
+        );
+    }
+
+    private extraiFiltros(): object {
+        let filtros = {};
+        if (this.form.controls['nome'].valid) {
+            Object.assign(filtros, {
+                nome: (key: any) =>
+                    removeAcentuacao(key.toUpperCase())?.includes(
+                        removeAcentuacao(this.form.value.nome?.toUpperCase())
+                    ),
+                email: (key: any) =>
+                    key.toUpperCase()?.includes(this.form.value.nome?.toUpperCase()),
+            });
+        }
+        if (this.form.controls['status'].valid) {
+            Object.assign(filtros, {
+                status: (key: any) =>
+                    key.toUpperCase()?.includes(this.form.value.status?.toUpperCase()),
+            });
+        }
+        return filtros;
     }
 
     onAdd() {
@@ -69,7 +126,6 @@ export class UsuariosComponent {
             },
             (reason) => {
                 if (reason) {
-                    console.log('reason: ', this.getDismissReason(reason));
                     this.subjectUpdate.next({});
                 }
             }
@@ -88,7 +144,6 @@ export class UsuariosComponent {
             },
             (reason) => {
                 if (reason) {
-                    console.log('reason: ', this.getDismissReason(reason));
                     this.subjectUpdate.next({});
                 }
             }
@@ -118,20 +173,9 @@ export class UsuariosComponent {
                             console.log(erro);
                         },
                         complete: () => { },
-                    })
+                    });
                 }
             }
         );
-    }
-
-    private getDismissReason(reason: any): string {
-        switch (reason) {
-            case ModalDismissReasons.ESC:
-                return 'by pressing ESC';
-            case ModalDismissReasons.BACKDROP_CLICK:
-                return 'by clicking on a backdrop';
-            default:
-                return reason;
-        }
     }
 }

@@ -7,30 +7,29 @@
                     <div class="row">
                         <div class="col-lg-8 mb-4">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-white border-end-0"
-                                    formControlName="nomeEmail" placeholder="Pesquise pelo nome ou e-mail" />
+                                <input type="text" class="form-control bg-white border-end-0 text-body"
+                                    formControlName="nome" placeholder="Pesquise pelo nome ou e-mail" />
                                 <div class="input-group-text bg-white">
                                     <i class="bi bi-search"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-4">
-                            <select class="form-select bg-white" formControlName="filtro">
-                                <option selected value="null">Filtrar</option>
-                                <option value="1">Todos</option>
-                                <option value="2">Ativo</option>
-                                <option value="3">Pendente</option>
-                                <option value="3">Bloqueado</option>
+                            <select class="form-select bg-white" formControlName="status">
+                                <option value="">Todos</option>
+                                <option value="ativo">Ativo</option>
+                                <option value="pendente">Pendente</option>
+                                <option value="bloqueado">Bloqueado</option>
                             </select>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="col-lg-6 text-end mb-4">
-                <button type="button" class="btn btn-primary" title="Adicionar novo usuário" (click)="onAdd()">Novo
-                    usuário</button>
+                <button type="button" class="btn btn-primary" title="Adicionar novo usuário" (click)="onAdd()">
+                    Novo usuário
+                </button>
             </div>
-
             <div class="col-12">
                 <ul class="list-group rounded-3">
                     <li class="list-group-item p-3 bg-white">
@@ -52,40 +51,48 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item px-3 py-4 py-lg-2" *ngFor="let usuario of data.documentos; even as even"
-                        [ngClass]="{ 'bg-white' : even}">
+                    <li class="list-group-item px-3 py-4 py-lg-2"
+                        *ngFor="let usuario of paginacao.documentos; even as even" [ngClass]="{ 'bg-white': even }">
                         <div class="row flex-column flex-lg-row">
                             <div class="align-self-center col mb-1 mb-lg-0">
                                 <app-card-mini-usuario [usuario]="usuario" />
                             </div>
                             <div class="align-self-center col mb-1 mb-lg-0">
-                                <span>{{usuario.status}}</span>
+                                <span class="bg-opacity-25 rounded-5 px-3 py-1 small text-capitalize" [ngClass]="
+                    usuario.status === 'ativo'
+                      ? 'bg-success text-success'
+                      : usuario.status === 'pendente'
+                      ? 'bg-warning text-warning'
+                      : 'bg-danger text-danger'
+                  ">{{ usuario.status }}</span>
                             </div>
                             <div class="align-self-center col mb-1 mb-lg-0">
-                                <span>{{usuario.criadoEm | date: 'shortDate'}}</span>
+                                <span>{{ usuario.criadoEm | date : "shortDate" }}</span>
                             </div>
                             <div class="align-self-center col mb-1 mb-lg-0">
-                                <span>{{usuario.ultimoAcesso | date: 'shortDate'}} às {{usuario.ultimoAcesso | date:
-                                    'shortTime'}}h</span>
+                                <span>{{ usuario.ultimoAcesso | date : "shortDate" }} às
+                                    {{ usuario.ultimoAcesso | date : "shortTime" }}h</span>
                             </div>
                             <div class="align-self-center col mb-0 mb-lg-0 col-lg-1 text-end">
                                 <button type="button" class="btn btn-link p-0 text-body-tertiary dropdown-toggles"
                                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                                     <i class="bi bi-three-dots-vertical"></i>
-
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" role="button" id="editar" (click)="onEditar(usuario)">Editar</a></li>
-                                    <li><a class="dropdown-item" role="button" id="excluir" (click)="onExcluir(usuario)">Excluir</a></li>
+                                    <li>
+                                        <a class="dropdown-item" role="button" id="editar"
+                                            (click)="onEditar(usuario)">Editar</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" role="button" id="excluir"
+                                            (click)="onExcluir(usuario)">Excluir</a>
+                                    </li>
                                 </ul>
-                                <!--  -->
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
-
         </div>
     </div>
 </section>
