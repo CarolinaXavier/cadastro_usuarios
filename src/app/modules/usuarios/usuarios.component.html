@@ -2,10 +2,10 @@
     <div class="container-lg p-4" *ngIf="data$ | async as data">
         <h1 class="fs-5 mb-5">Usuários</h1>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <form [formGroup]="form">
                     <div class="row">
-                        <div class="col-lg-8 mb-4">
+                        <div class="col-lg-6 mb-4 px-2">
                             <div class="input-group">
                                 <input type="text" class="form-control bg-white border-end-0 text-body"
                                     formControlName="nome" placeholder="Pesquise pelo nome ou e-mail" />
@@ -14,18 +14,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 mb-4">
-                            <select class="form-select bg-white" formControlName="status">
-                                <option value="">Todos</option>
-                                <option value="ativo">Ativo</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="bloqueado">Bloqueado</option>
-                            </select>
+                        <div class="w-auto mb-4 px-2">
+                            <ng-select class="custom form-select p-0" [multiple]="true" placeholder="Filtrar"
+                                formControlName="status" [items]="statusList" [clearable]="false" [searchable]="false"
+                                bindValue="value" bindLabel="value">
+                            </ng-select>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="col-lg-6 text-end mb-4">
+            <div class="col-lg-4 text-end mb-4">
                 <button type="button" class="btn btn-primary" title="Adicionar novo usuário" (click)="onAdd()">
                     Novo usuário
                 </button>

@@ -51,6 +51,13 @@ export class UsuariosComponent {
         backdrop: 'static',
     };
 
+    statusList = [
+        { value: 'todos' },
+        { value: 'ativo' },
+        { value: 'pendente' },
+        { value: 'bloqueado' },
+    ]
+
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
@@ -74,7 +81,7 @@ export class UsuariosComponent {
 
         this.form = this.fb.group({
             nome: ['', [Validators.required, CustomValidators.notEmpty]],
-            status: ['', [Validators.required]],
+            status: [['todos'], [Validators.required]],
         });
 
         this.form.valueChanges
@@ -133,10 +140,14 @@ export class UsuariosComponent {
                     key.toUpperCase()?.includes(this.form.value.nome?.toUpperCase()),
             });
         }
-        if (this.form.controls['status'].valid) {
+        const statusValue: string[] = this.form.controls['status'].value;
+        if (this.form.controls['status'].valid && (!statusValue.includes('todos'))) {
             Object.assign(filtros, {
                 status: (key: any) =>
-                    key.toUpperCase()?.includes(this.form.value.status?.toUpperCase()),
+
+                    this.form.value.status?.map((status: string) => status.toUpperCase()).includes(key.toUpperCase())
+
+                //key.toUpperCase()?.includes(this.form.value.status?.toUpperCase()),
             });
         }
         return filtros;

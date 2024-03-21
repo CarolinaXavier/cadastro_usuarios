@@ -30,6 +30,7 @@ import { DinamicaImgBackgroundDirective } from './directives/dinamica-img-backgr
     CardTestimonyComponent,
     NavPaginacaoComponent,
     DinamicaImgBackgroundDirective,
+    NgSelectModule
   ],
   providers: [provideNgxMask()],
 })
