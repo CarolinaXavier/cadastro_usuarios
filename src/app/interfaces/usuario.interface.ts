@@ -1,4 +1,5 @@
 export interface IUsuario {
+    _id: string;
     nome: string;
     sobreNome: string;
     telefone: {

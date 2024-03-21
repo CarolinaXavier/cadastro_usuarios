@@ -8,6 +8,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, switchMap, tap } from 'rxjs';
 import { IData } from 'src/app/interfaces/data.interface';
+import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { DataService } from 'src/app/services/data.service';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
 
@@ -24,6 +25,13 @@ export class UsuariosComponent {
     subjectUpdate: Subject<any> = new Subject<any>();
 
     form!: FormGroup;
+
+    modalOptions: NgbModalOptions = {
+        ariaLabelledBy: 'modal-basic-title',
+        size: 'lg',
+        centered: true,
+        backdrop: 'static',
+    };
 
     constructor(
         private fb: FormBuilder,
@@ -46,22 +54,12 @@ export class UsuariosComponent {
         this.form.valueChanges.subscribe((values) => {
             console.log(values);
         });
-
-        setTimeout(() => {
-            this.usuarioAdd();
-        }, 100);
     }
 
-    protected usuarioAdd() {
-        const options: NgbModalOptions = {
-            ariaLabelledBy: 'modal-basic-title',
-            size: 'lg',
-            centered: true,
-            backdrop: 'static',
-        };
+    onAdd() {
         const modalRef: NgbModalRef = this.modalService.open(
             FormUsuarioComponent,
-            options
+            this.modalOptions
         );
         modalRef.result.then(
             (result) => {
@@ -74,6 +72,29 @@ export class UsuariosComponent {
                 }
             }
         );
+    }
+
+    onEditar(usuario: IUsuario) {
+        const modalRef: NgbModalRef = this.modalService.open(
+            FormUsuarioComponent,
+            this.modalOptions
+        );
+        modalRef.componentInstance.data = usuario;
+        modalRef.result.then(
+            (result) => {
+                console.log('result: ', result);
+            },
+            (reason) => {
+                if (reason) {
+                    console.log('reason: ', this.getDismissReason(reason));
+                    this.subjectUpdate.next({});
+                }
+            }
+        );
+    }
+
+    onExcluir() {
+
     }
 
     private getDismissReason(reason: any): string {

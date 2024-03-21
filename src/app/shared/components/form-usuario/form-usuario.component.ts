@@ -80,24 +80,40 @@ export class FormUsuarioComponent implements OnInit {
     onSubmit() {
         if (this.formService.valid(this.form)) {
             const now = new Date();
-            const usuario: IUsuario = Object.assign(
-                {
-                    status: 'ativo',
-                    criadoEm: now.toISOString(),
-                    ultimoAcesso: now.toISOString(),
-                },
-                this.form.value
-            );
-
-            this.dataService.add(usuario).subscribe({
-                next: (response: any) => {
-                    this.modalService.dismissAll(response);
-                },
-                error: (erro: HttpErrorResponse) => {
-                    console.log(erro);
-                },
-                complete: () => { },
-            });
+            if (!this.data) {
+                const usuario: IUsuario = Object.assign(
+                    {
+                        _id: now.toISOString(),
+                        status: 'ativo',
+                        criadoEm: now.toISOString(),
+                        ultimoAcesso: now.toISOString(),
+                    },
+                    this.form.value
+                );
+                this.dataService.add(usuario).subscribe({
+                    next: (response: any) => {
+                        this.modalService.dismissAll(response);
+                    },
+                    error: (erro: HttpErrorResponse) => {
+                        console.log(erro);
+                    },
+                    complete: () => { },
+                });
+            } else {
+                const usuario: IUsuario = Object.assign(
+                    this.data,
+                    this.form.value
+                );
+                this.dataService.edit(usuario).subscribe({
+                    next: (response: any) => {
+                        this.modalService.dismissAll(response);
+                    },
+                    error: (erro: HttpErrorResponse) => {
+                        console.log(erro);
+                    },
+                    complete: () => { },
+                });
+            }
         } else {
             console.error(`from: ${this.form.status}`);
         }
