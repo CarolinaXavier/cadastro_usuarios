@@ -6,7 +6,6 @@ import {
     Validators,
 } from '@angular/forms';
 import {
-    ModalDismissReasons,
     NgbModal,
     NgbModalOptions,
     NgbModalRef,
