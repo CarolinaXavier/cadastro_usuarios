@@ -14,4 +14,6 @@ export interface IUsuario {
     status: 'ativo' | 'pendente' | 'bloqueado';
     criadoEm: string;
     ultimoAcesso: string;
+
+    cor: string;
 }

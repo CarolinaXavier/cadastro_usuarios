@@ -13,6 +13,7 @@ import { UtilPaisCodeTelefone } from 'src/app/utils/pais-code-telefone';
 import { DataService } from 'src/app/services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { roundColor } from 'src/app/utils/round-color.function';
 
 @Component({
     selector: 'app-form-usuario',
@@ -87,7 +88,8 @@ export class FormUsuarioComponent implements OnInit {
                         status: 'ativo',
                         criadoEm: now.toISOString(),
                         ultimoAcesso: now.toISOString(),
-                    },
+                        cor: roundColor()
+                    } as IUsuario,
                     this.form.value
                 );
                 this.dataService.add(usuario).subscribe({

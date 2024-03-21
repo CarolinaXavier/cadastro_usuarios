@@ -23,7 +23,7 @@ import { DataService } from 'src/app/services/data.service';
 import { PaginacaoConfigService } from 'src/app/services/paginacao-config.service';
 import { ConfirmaAcaoComponent } from 'src/app/shared/components/confirma-acao/confirma-acao.component';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
-import { filtrarArrayMultiKeyFunction } from 'src/app/utils/filtrar-array-multi-key-.function';
+import { filtrarArrayMultiKeyFunction } from 'src/app/utils/filtrar-array-multi-key.function';
 import { obterPaginado } from 'src/app/utils/obter-paginado.function';
 import { removeAcentuacao } from 'src/app/utils/remove-acentuacao.function';
 
