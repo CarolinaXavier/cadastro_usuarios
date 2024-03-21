@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlagPaisByTelefoneCodePipe } from './pipes/flag-pais-by-telefone-code.pipe';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ConfirmaAcaoComponent } from './components/confirma-acao/confirma-acao.component';
 
 @NgModule({
   declarations: [
     FormUsuarioComponent,
     CardTestimonyComponent,
     FlagPaisByTelefoneCodePipe,
+    ConfirmaAcaoComponent,
   ],
   imports: [
     CommonModule,

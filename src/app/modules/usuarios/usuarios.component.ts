@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
@@ -10,6 +11,7 @@ import { Observable, Subject, merge, switchMap, tap } from 'rxjs';
 import { IData } from 'src/app/interfaces/data.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { DataService } from 'src/app/services/data.service';
+import { ConfirmaAcaoComponent } from 'src/app/shared/components/confirma-acao/confirma-acao.component';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
 
 @Component({
@@ -93,8 +95,33 @@ export class UsuariosComponent {
         );
     }
 
-    onExcluir() {
-
+    onExcluir(usuario: IUsuario) {
+        const modalRef: NgbModalRef = this.modalService.open(
+            ConfirmaAcaoComponent,
+            {
+                ...this.modalOptions,
+                size: 'md',
+            }
+        );
+        modalRef.componentInstance.data = usuario;
+        modalRef.result.then(
+            (result) => {
+                console.log('result: ', result);
+            },
+            (reason) => {
+                if (reason) {
+                    this.dataService.remove(usuario._id).subscribe({
+                        next: (response: any) => {
+                            this.subjectUpdate.next({});
+                        },
+                        error: (erro: HttpErrorResponse) => {
+                            console.log(erro);
+                        },
+                        complete: () => { },
+                    })
+                }
+            }
+        );
     }
 
     private getDismissReason(reason: any): string {

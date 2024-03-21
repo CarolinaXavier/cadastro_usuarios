@@ -1,4 +1,5 @@
 $primary: #608ffe !default;
+$danger: #f70b17 !default;
 $body-bg: #f5f9fa !default;
 
 $font-size-base: 1rem !default;
@@ -45,6 +46,29 @@ $input-color: rgba(var(--bs-body-color-rgb), 0.6) !default;
     &:focus {
         color: var(--bs-primary) !important;
         border-color: var(--bs-primary) !important;
+        background-color: var(--bs-body) !important;
+    }
+}
+
+.btn.btn-danger {
+    color: var(--bs-white);
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--bs-white) !important;
+    }
+}
+
+.btn.btn-outline-danger {
+    color: var(--bs-danger);
+    border-color: transparent !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--bs-danger) !important;
+        border-color: var(--bs-danger) !important;
         background-color: var(--bs-body) !important;
     }
 }
