@@ -68,7 +68,7 @@ export class FormUsuarioComponent {
     }
 
     dropdownChange(event: any) {
-        this.form.patchValue({ paisCodeTelefone: event.target.id });
+        this.formTelefone.patchValue({ codigoDoPais: event.target.id });
     }
 
     onSubmit() {
