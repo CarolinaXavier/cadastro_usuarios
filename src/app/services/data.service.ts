@@ -131,10 +131,25 @@ export class DataService {
 
     constructor() { }
 
+    add(usuario: IUsuario): Observable<any> {
+        return new Observable((obs) => {
+            try {
+                this.usuarios.push(usuario);
+                obs.next({
+                    message: 'sucesso!',
+                });
+            } catch {
+                obs.error({
+                    message: 'erro!'
+                });
+            }
+        });
+    }
+
     list(search: any): Observable<any> {
         return new Observable((obs) => {
             obs.next({
-                documentos: this.usuarios,
+                documentos: [...this.usuarios],
                 totalDocumentos: 0,
                 limite: 0,
                 totalPaginas: 0,

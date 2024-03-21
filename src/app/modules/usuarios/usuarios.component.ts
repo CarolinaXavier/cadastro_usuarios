@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+    ModalDismissReasons,
+    NgbModal,
+    NgbModalOptions,
+    NgbModalRef,
+} from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IData } from 'src/app/interfaces/data.interface';
-import { ModalService } from 'src/app/services/modal.service';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
 import { loadData } from 'src/app/store/data.actions';
 import { getData } from 'src/app/store/data.selector';
@@ -19,7 +24,7 @@ export class UsuariosComponent {
 
     constructor(
         private fb: FormBuilder,
-        private modalService: ModalService,
+        private modalService: NgbModal,
         private store: Store<{ data: any }>
     ) {
         this.data$ = this.store.select(getData);
@@ -34,9 +39,7 @@ export class UsuariosComponent {
         });
 
         // todo
-        this.store.dispatch(
-            loadData({ filtro: { nomeEmail: '', filtro: '' } })
-        );
+        this.store.dispatch(loadData({ filtro: { nomeEmail: '', filtro: '' } }));
 
         setTimeout(() => {
             this.usuarioAdd();
@@ -44,15 +47,35 @@ export class UsuariosComponent {
     }
 
     protected usuarioAdd() {
-        this.modalService.open({
-            component: FormUsuarioComponent,
-            inputs: {
-                data: {
-                    titulo: 'Adicionar usuário',
-                    subTitulo:
-                        'Aqui você adiciona e configura os usuários que fazem parte da sua equipe',
-                },
+        const options: NgbModalOptions = {
+            ariaLabelledBy: 'modal-basic-title',
+            size: 'lg',
+            centered: true,
+            backdrop: 'static',
+        };
+        const modalRef: NgbModalRef = this.modalService.open(
+            FormUsuarioComponent,
+            options
+        );
+        modalRef.componentInstance.isEdit = false;
+        modalRef.result.then(
+            (result) => {
+                console.log('result: ', result);
             },
-        });
+            (reason) => {
+                console.log('reason: ', this.getDismissReason(reason));
+            }
+        );
+    }
+
+    private getDismissReason(reason: any): string {
+        switch (reason) {
+            case ModalDismissReasons.ESC:
+                return 'by pressing ESC';
+            case ModalDismissReasons.BACKDROP_CLICK:
+                return 'by clicking on a backdrop';
+            default:
+                return reason;
+        }
     }
 }

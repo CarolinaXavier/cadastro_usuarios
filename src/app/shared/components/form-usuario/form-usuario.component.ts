@@ -8,9 +8,11 @@ import {
 import { CustomValidators } from 'src/app/form-validators/custom.validator';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { FormService } from 'src/app/services/form.service';
-import { ModalService } from 'src/app/services/modal.service';
 import { UtilPaisIdioma } from 'src/app/utils/pais-idioma.util';
 import { UtilPaisCodeTelefone } from 'src/app/utils/pais-code-telefone';
+import { DataService } from 'src/app/services/data.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-form-usuario',
@@ -18,7 +20,7 @@ import { UtilPaisCodeTelefone } from 'src/app/utils/pais-code-telefone';
     styleUrls: ['./form-usuario.component.scss'],
 })
 export class FormUsuarioComponent {
-    @Input({ required: true }) data!: any;
+    @Input({ required: true }) isEdit: boolean = false;
 
     form!: FormGroup;
     utilPaisIdioma = UtilPaisIdioma;
@@ -31,7 +33,8 @@ export class FormUsuarioComponent {
     constructor(
         private fb: FormBuilder,
         protected formService: FormService,
-        private modalService: ModalService
+        private dataService: DataService,
+        private modalService: NgbModal
     ) {
         this.form = this.fb.group({
             nome: new FormControl(null, [
@@ -70,21 +73,31 @@ export class FormUsuarioComponent {
 
     onSubmit() {
         if (this.formService.valid(this.form)) {
-            const novoUsuario: IUsuario = Object.assign(
+            const now = new Date();
+            const usuario: IUsuario = Object.assign(
                 {
                     status: 'ativo',
-                    criadoEm: new Date(),
-                    ultimoAcesso: new Date(),
+                    criadoEm: now.toISOString(),
+                    ultimoAcesso: now.toISOString(),
                 },
                 this.form.value
             );
-            
+
+            this.dataService.add(usuario).subscribe({
+                next: (response: any) => {
+                    this.modalService.dismissAll(response);
+                },
+                error: (erro: HttpErrorResponse) => {
+                    console.log(erro);
+                },
+                complete: () => { },
+            });
         } else {
             console.error(`from: ${this.form.status}`);
         }
     }
 
-    closeModal() {
-        this.modalService.open(false);
+    close() {
+        this.modalService.dismissAll(null);
     }
 }
