@@ -39,12 +39,13 @@
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                             <div class="container-fluid pais-telefone-flag-bg rounded-circle shadow me-2"
-                                style="--bg-image: url({{ formTelefone.value.codigoDoPais | flagPaisByTelefoneCode }});">
+                                appDinamicaImgBackground [codigoDoPais]="formTelefone.value.codigoDoPais"
+                                fallbackImageUrl="assets/img/flags/default.png">
                             </div>
 
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" role="button" id="{{paisCodeTelefone.code}}"
+                            <li><a class="dropdown-item" role="button" id="{{paisCodeTelefone.ddi}}"
                                     *ngFor="let paisCodeTelefone of utilPaisCodeTelefone"
                                     (click)="dropdownChange($event)">{{paisCodeTelefone.pais}}</a></li>
                         </ul>
@@ -52,7 +53,7 @@
                             class="form-control text-body border-start-0 border-end-0 border border-opacity-25 px-0 shadow-none "
                             type="text" readonly formControlName="codigoDoPais" style="width: 1rem;">
                         <input class="form-control text-body border-start-0 w-auto" type="text" formControlName="numero"
-                            mask="(00) 0000-0000" [validation]="false"/>
+                            mask="(00) 0000-0000" [validation]="false" />
 
                     </div>
                 </div>
@@ -91,7 +92,7 @@
                         [ngClass]="formService.class(form.controls['idioma'], 'is-invalid')" name="idioma"
                         title="Idioma">
                         <option selected value="">Selecione</option>
-                        <option value="{{idioma.id}}" *ngFor="let idioma of utilPaisIdioma">{{idioma.label}}</option>
+                        <option value="{{idioma.id}}" *ngFor="let idioma of utilPaisIdioma">{{idioma.name}}</option>
                     </select>
                 </div>
             </div>

@@ -3,19 +3,19 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormUsuarioComponent } from './components/form-usuario/form-usuario.component';
 import { CardTestimonyComponent } from './components/card-mini-usuario/card-mini-usuario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlagPaisByTelefoneCodePipe } from './pipes/flag-pais-by-telefone-code.pipe';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmaAcaoComponent } from './components/confirma-acao/confirma-acao.component';
 import { NavPaginacaoComponent } from './components/nav-paginacao/nav-paginacao.component';
+import { DinamicaImgBackgroundDirective } from './directives/dinamica-img-background.directive';
 
 @NgModule({
   declarations: [
     FormUsuarioComponent,
     CardTestimonyComponent,
-    FlagPaisByTelefoneCodePipe,
     ConfirmaAcaoComponent,
-    NavPaginacaoComponent
+    NavPaginacaoComponent,
+    DinamicaImgBackgroundDirective,
   ],
   imports: [
     CommonModule,
@@ -26,7 +26,11 @@ import { NavPaginacaoComponent } from './components/nav-paginacao/nav-paginacao.
     NgxMaskPipe,
     NgSelectModule,
   ],
-  exports: [CardTestimonyComponent, FlagPaisByTelefoneCodePipe, NavPaginacaoComponent],
+  exports: [
+    CardTestimonyComponent,
+    NavPaginacaoComponent,
+    DinamicaImgBackgroundDirective,
+  ],
   providers: [provideNgxMask()],
 })
-export class SharedModule { }
+export class SharedModule {}

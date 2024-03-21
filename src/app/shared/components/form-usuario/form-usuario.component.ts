@@ -8,12 +8,13 @@ import {
 import { CustomValidators } from 'src/app/form-validators/custom.validator';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { FormService } from 'src/app/services/form.service';
-import { UtilPaisIdioma } from 'src/app/utils/pais-idioma.util';
-import { UtilPaisCodeTelefone } from 'src/app/utils/pais-code-telefone';
+import { UtilPaisIdioma } from 'src/app/sources/pais-idioma.util';
+import { UtilPaisCodeTelefone } from 'src/app/sources/pais-code-telefone';
 import { DataService } from 'src/app/services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { roundColor } from 'src/app/utils/round-color.function';
+import { Utils } from 'src/app/utils/utils';
+
 
 @Component({
     selector: 'app-form-usuario',
@@ -47,7 +48,7 @@ export class FormUsuarioComponent implements OnInit {
                 CustomValidators.notEmpty,
             ]),
             telefone: this.fb.group({
-                codigoDoPais: new FormControl(this.utilPaisCodeTelefone[0].code, []),
+                codigoDoPais: new FormControl(this.utilPaisCodeTelefone[30].ddi, []),
                 numero: new FormControl(null, []),
             }),
             email: new FormControl(null, [
@@ -56,7 +57,7 @@ export class FormUsuarioComponent implements OnInit {
                 Validators.email,
             ]),
             perfis: new FormControl(null, [Validators.required]),
-            idioma: new FormControl(this.utilPaisIdioma[0].id, [
+            idioma: new FormControl(this.utilPaisIdioma[157].id, [
                 Validators.required,
                 CustomValidators.notEmpty,
             ]),
@@ -88,7 +89,7 @@ export class FormUsuarioComponent implements OnInit {
                         status: 'ativo',
                         criadoEm: now.toISOString(),
                         ultimoAcesso: now.toISOString(),
-                        cor: roundColor()
+                        cor: Utils.roundColor()
                     } as IUsuario,
                     this.form.value
                 );

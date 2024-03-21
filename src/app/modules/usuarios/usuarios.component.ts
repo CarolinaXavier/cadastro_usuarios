@@ -23,9 +23,7 @@ import { DataService } from 'src/app/services/data.service';
 import { PaginacaoConfigService } from 'src/app/services/paginacao-config.service';
 import { ConfirmaAcaoComponent } from 'src/app/shared/components/confirma-acao/confirma-acao.component';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
-import { filtrarArrayMultiKeyFunction } from 'src/app/utils/filtrar-array-multi-key.function';
-import { obterPaginado } from 'src/app/utils/obter-paginado.function';
-import { removeAcentuacao } from 'src/app/utils/remove-acentuacao.function';
+import { Utils } from 'src/app/utils/utils';
 
 @Component({
     selector: 'app-usuarios',
@@ -98,8 +96,8 @@ export class UsuariosComponent {
     }
 
     carregarPaginacao(paginacaoConfig: IPaginacaoConfig): void {
-        this.paginacao = obterPaginado(
-            filtrarArrayMultiKeyFunction(this.data, this.extraiFiltros()),
+        this.paginacao = Utils.obterPaginado(
+            Utils.filtrarArrayMultiKeyFunction(this.data, this.extraiFiltros()),
             paginacaoConfig.pagina,
             paginacaoConfig.limite
         );
@@ -128,8 +126,8 @@ export class UsuariosComponent {
         if (this.form.controls['nome'].valid) {
             Object.assign(filtros, {
                 nome: (key: any) =>
-                    removeAcentuacao(key.toUpperCase())?.includes(
-                        removeAcentuacao(this.form.value.nome?.toUpperCase())
+                    Utils.removeAcentuacao(key.toUpperCase())?.includes(
+                        Utils.removeAcentuacao(this.form.value.nome?.toUpperCase())
                     ),
                 email: (key: any) =>
                     key.toUpperCase()?.includes(this.form.value.nome?.toUpperCase()),
@@ -144,12 +142,7 @@ export class UsuariosComponent {
         return filtros;
     }
 
-/*     onControlePagina() {
-        this.paginacaoConfigService.setConfig({ pagina: 2 })
-    } */
-
-    navegarParaPagina(event: any){
-        console.log(event)
+    navegarParaPagina(event: any) {
         this.paginacaoConfigService.setConfig({ pagina: event })
     }
 
