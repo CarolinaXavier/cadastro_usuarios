@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="w-auto mb-4 px-2">
-                            <ng-select class="custom form-select p-0" [multiple]="true" placeholder="Filtrar"
+                            <ng-select class="custom form-select p-0 h-auto" [multiple]="true" placeholder="Filtrar"
                                 formControlName="status" [items]="statusList" [clearable]="false" [searchable]="false"
                                 bindValue="value" bindLabel="value">
                             </ng-select>
@@ -89,12 +89,13 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" role="button" id="editar"
-                                            (click)="onEditar(usuario)">Editar</a>
+                                        <a class="dropdown-item" role="button" id="editar" (click)="onEditar(usuario)">
+                                            <i class="bi bi-pencil me-2"></i>Editar</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" role="button" id="excluir"
-                                            (click)="onExcluir(usuario)">Excluir</a>
+                                            (click)="onExcluir(usuario)">
+                                            <i class="bi bi-trash me-2"></i>Excluir</a>
                                     </li>
                                 </ul>
                             </div>

@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import {
     NgbModal,
     NgbModalOptions,
@@ -38,7 +43,9 @@ export class UsuariosComponent {
 
     form!: FormGroup;
     controleSortData: FormControl = new FormControl(true);
-    controleLimite: FormControl = new FormControl(this.paginacaoConfigService.getConfig().limite);
+    controleLimite: FormControl = new FormControl(
+        this.paginacaoConfigService.getConfig().limite
+    );
 
     paginacao!: IPaginacao;
     paginacaoConfig: IPaginacaoConfig = this.paginacaoConfigService.getConfig();
@@ -56,7 +63,7 @@ export class UsuariosComponent {
         { value: 'ativo' },
         { value: 'pendente' },
         { value: 'bloqueado' },
-    ]
+    ];
 
     constructor(
         private fb: FormBuilder,
@@ -75,7 +82,7 @@ export class UsuariosComponent {
             tap((data) => {
                 this.data = data;
                 this.carregarPaginacao(this.paginacaoConfig);
-                console.log(this.data)
+                console.log(this.data);
             })
         );
 
@@ -97,9 +104,9 @@ export class UsuariosComponent {
             }
         });
 
-        this.controleLimite.valueChanges.subscribe(value => {
+        this.controleLimite.valueChanges.subscribe((value) => {
             this.paginacaoConfigService.setConfig({ limite: Number(value) });
-        })
+        });
     }
 
     carregarPaginacao(paginacaoConfig: IPaginacaoConfig): void {
@@ -141,20 +148,19 @@ export class UsuariosComponent {
             });
         }
         const statusValue: string[] = this.form.controls['status'].value;
-        if (this.form.controls['status'].valid && (!statusValue.includes('todos'))) {
+        if (this.form.controls['status'].valid && !statusValue.includes('todos')) {
             Object.assign(filtros, {
                 status: (key: any) =>
-
-                    this.form.value.status?.map((status: string) => status.toUpperCase()).includes(key.toUpperCase())
-
-                //key.toUpperCase()?.includes(this.form.value.status?.toUpperCase()),
+                    this.form.value.status
+                        ?.map((status: string) => status.toUpperCase())
+                        .includes(key.toUpperCase()),
             });
         }
         return filtros;
     }
 
     navegarParaPagina(event: any) {
-        this.paginacaoConfigService.setConfig({ pagina: event })
+        this.paginacaoConfigService.setConfig({ pagina: event });
     }
 
     onAdd() {
@@ -164,13 +170,11 @@ export class UsuariosComponent {
         );
         modalRef.result.then(
             (result) => {
-                console.log('result: ', result);
-            },
-            (reason) => {
-                if (reason) {
+                if (result) {
                     this.subjectUpdate.next({});
                 }
-            }
+            },
+            (reason) => { }
         );
     }
 
@@ -182,13 +186,11 @@ export class UsuariosComponent {
         modalRef.componentInstance.data = usuario;
         modalRef.result.then(
             (result) => {
-                console.log('result: ', result);
-            },
-            (reason) => {
-                if (reason) {
+                if (result) {
                     this.subjectUpdate.next({});
                 }
-            }
+            },
+            (reason) => { }
         );
     }
 
@@ -201,12 +203,10 @@ export class UsuariosComponent {
             }
         );
         modalRef.componentInstance.data = usuario;
+        modalRef.componentInstance.acao = 'delete';
         modalRef.result.then(
             (result) => {
-                console.log('result: ', result);
-            },
-            (reason) => {
-                if (reason) {
+                if (result) {
                     this.dataService.remove(usuario._id).subscribe({
                         next: (response: any) => {
                             this.subjectUpdate.next({});
@@ -217,7 +217,8 @@ export class UsuariosComponent {
                         complete: () => { },
                     });
                 }
-            }
+            },
+            (reason) => { }
         );
     }
 }

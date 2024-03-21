@@ -12,8 +12,9 @@ import { UtilPaisIdioma } from 'src/app/sources/pais-idioma.util';
 import { UtilPaisCodeTelefone } from 'src/app/sources/pais-code-telefone';
 import { DataService } from 'src/app/services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/utils/utils';
+import { ConfirmaAcaoComponent } from '../confirma-acao/confirma-acao.component';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class FormUsuarioComponent implements OnInit {
         private fb: FormBuilder,
         protected formService: FormService,
         private dataService: DataService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private ngbActiveModal: NgbActiveModal
     ) {
         this.form = this.fb.group({
             nome: new FormControl(null, [
@@ -95,7 +97,7 @@ export class FormUsuarioComponent implements OnInit {
                 );
                 this.dataService.add(usuario).subscribe({
                     next: (response: any) => {
-                        this.modalService.dismissAll(response);
+                        this.ngbActiveModal.close(response);
                     },
                     error: (erro: HttpErrorResponse) => {
                         console.log(erro);
@@ -103,26 +105,45 @@ export class FormUsuarioComponent implements OnInit {
                     complete: () => { },
                 });
             } else {
-                const usuario: IUsuario = Object.assign(
-                    this.data,
-                    this.form.value
+                const modalRef: NgbModalRef = this.modalService.open(
+                    ConfirmaAcaoComponent,
+                    {
+                        ariaLabelledBy: 'modal-basic-title',
+                        size: 'md',
+                        centered: true,
+                        backdrop: 'static',
+                    }
                 );
-                this.dataService.edit(usuario).subscribe({
-                    next: (response: any) => {
-                        this.modalService.dismissAll(response);
+                modalRef.componentInstance.data = this.data;
+                modalRef.result.then(
+                    (result) => {
+                        if (result) {
+                            const usuario: IUsuario = Object.assign(
+                                this.data,
+                                this.form.value
+                            );
+                            this.dataService.edit(usuario).subscribe({
+                                next: (response: any) => {
+                                    this.ngbActiveModal.close(response);
+                                },
+                                error: (erro: HttpErrorResponse) => {
+                                    console.log(erro);
+                                },
+                                complete: () => { },
+                            });
+                        }
                     },
-                    error: (erro: HttpErrorResponse) => {
-                        console.log(erro);
-                    },
-                    complete: () => { },
-                });
+                    (reason) => {
+
+                    }
+                );
             }
         } else {
             console.error(`from: ${this.form.status}`);
         }
     }
 
-    close() {
-        this.modalService.dismissAll(null);
+    dismiss() {
+        this.ngbActiveModal.dismiss();
     }
 }

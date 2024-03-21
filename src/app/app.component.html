@@ -20,7 +20,14 @@
                 <li class="nav-item mx-2 mx-lg-1 d-flex">
                     <a class="nav-link" (click)="
               navCollapse.classList.contains('show') && navbartoggler.click()
-            " routerLink="" routerLinkActive="active"><i class="bi bi-bell"></i></a>
+            " routerLink="" routerLinkActive="active">
+                        <div class="position-relative">
+                            <i class="bi bi-bell"></i>
+                            <i class="position-absolute start-100 translate-middle badge bi bi-dot text-body fs-2 p-0"
+                                [ngStyle]="{ top: '6px'}">
+                                <span class="visually-hidden">Nova notificação</span> </i>
+                        </div>
+                    </a>
                 </li>
             </ul>
         </div>

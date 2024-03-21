@@ -8,7 +8,7 @@
         </p>
     </div>
     <button type="button" class="btn-close align-self-start pt-3 shadow-none " title="Fechar" data-bs-dismiss="modal"
-        aria-label="Close" (click)="close()"></button>
+        aria-label="Close" (click)="dismiss()"></button>
 </div>
 <div class="modal-body">
     <form [formGroup]="form" (submit)="onSubmit()" class="">
@@ -123,7 +123,7 @@
         </div>
         <div class="row">
             <div class="col-lg-6 mt-3 px-2">
-                <button type="button" class="btn btn-outline-primary w-100" (click)="close()">Fechar</button>
+                <button type="button" class="btn btn-outline-primary w-100" (click)="dismiss()">Fechar</button>
             </div>
             <div class="col-lg-6 mt-3 px-2">
                 <button type="submit" class="btn btn-primary w-100">{{ data ? 'Salvar alterações' : 'Envia convite'
