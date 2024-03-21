@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
     ModalDismissReasons,
@@ -6,12 +6,10 @@ import {
     NgbModalOptions,
     NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject, merge, switchMap, tap } from 'rxjs';
 import { IData } from 'src/app/interfaces/data.interface';
+import { DataService } from 'src/app/services/data.service';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
-import { loadData } from 'src/app/store/data.actions';
-import { getData } from 'src/app/store/data.selector';
 
 @Component({
     selector: 'app-usuarios',
@@ -20,14 +18,25 @@ import { getData } from 'src/app/store/data.selector';
 })
 export class UsuariosComponent {
     data$!: Observable<IData>;
+    dataInit$!: Observable<IData>;
+    dataUpdate$!: Observable<IData>;
+
+    subjectUpdate: Subject<any> = new Subject<any>();
+
     form!: FormGroup;
 
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
-        private store: Store<{ data: any }>
+        private dataService: DataService
     ) {
-        this.data$ = this.store.select(getData);
+        this.dataInit$ = this.dataService.list({}).pipe();
+        this.dataUpdate$ = this.subjectUpdate.asObservable().pipe(
+            switchMap(() => {
+                return this.dataService.list({}).pipe();
+            })
+        );
+        this.data$ = merge(this.dataInit$, this.dataUpdate$).pipe(tap(console.log));
 
         this.form = this.fb.group({
             nomeEmail: [null],
@@ -37,9 +46,6 @@ export class UsuariosComponent {
         this.form.valueChanges.subscribe((values) => {
             console.log(values);
         });
-
-        // todo
-        this.store.dispatch(loadData({ filtro: { nomeEmail: '', filtro: '' } }));
 
         setTimeout(() => {
             this.usuarioAdd();
@@ -57,13 +63,15 @@ export class UsuariosComponent {
             FormUsuarioComponent,
             options
         );
-        modalRef.componentInstance.isEdit = false;
         modalRef.result.then(
             (result) => {
                 console.log('result: ', result);
             },
             (reason) => {
-                console.log('reason: ', this.getDismissReason(reason));
+                if (reason) {
+                    console.log('reason: ', this.getDismissReason(reason));
+                    this.subjectUpdate.next({});
+                }
             }
         );
     }

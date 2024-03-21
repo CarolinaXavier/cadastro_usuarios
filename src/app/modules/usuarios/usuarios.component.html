@@ -52,8 +52,8 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item px-3 py-4 py-lg-2"
-                        *ngFor="let usuario of data.result.documentos; even as even" [ngClass]="{ 'bg-white' : even}">
+                    <li class="list-group-item px-3 py-4 py-lg-2" *ngFor="let usuario of data.documentos; even as even"
+                        [ngClass]="{ 'bg-white' : even}">
                         <div class="row flex-column flex-lg-row">
                             <div class="align-self-center col mb-1 mb-lg-0">
                                 <app-card-mini-usuario [usuario]="usuario" />

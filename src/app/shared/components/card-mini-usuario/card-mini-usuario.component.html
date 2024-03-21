@@ -1,12 +1,14 @@
 <div class="d-flex border-0">
     <div class="p-0 me-2 align-self-center">
         <img priority ngSrc="assets/img/person-1.webp" srcset="assets/img/person-1.webp" class="rounded-circle"
-            width="36" title="Jane Due" height="36" alt="Jane Due">
+            width="36" title="Jane Due" height="36" alt="Jane Due" />
     </div>
     <div class="d-inline-flex p-0 rounded-4 rounded-top-0 rounded-end-4">
         <div class="d-block">
-            <p class="fw-semibold m-0 lh-1">{{usuario.nome}}</p>
-            <small class="text-body-tertiary">{{usuario.email}}</small>
+            <p class="fw-semibold m-0 lh-1">
+                {{ usuario.nome + " " + usuario.sobreNome }}
+            </p>
+            <small class="text-body-tertiary">{{ usuario.email }}</small>
         </div>
     </div>
 </div>

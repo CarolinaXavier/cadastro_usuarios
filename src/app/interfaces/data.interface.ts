@@ -1,7 +1,11 @@
 import { HttpErrorResponse } from "@angular/common/http";
 
 export interface IData {
-    result: any;
-    isLoading?: boolean;
-    error?: HttpErrorResponse | null;
+    documentos: any[],
+    totalDocumentos: number,
+    limite: number,
+    totalPaginas: number,
+    pagina: number,
+    anterior: boolean,
+    proxima: boolean,
 }

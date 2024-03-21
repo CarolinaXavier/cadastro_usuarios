@@ -1,7 +1,7 @@
 <div class="modal-header border-0">
     <div>
         <h1 class="modal-title fs-4 mb-1" id="modalLabel">
-            {{ isEdit ? 'Editar usuário' : 'Adicionar usuário'}}
+            {{ data ? 'Editar usuário' : 'Adicionar usuário'}}
         </h1>
         <p class="text-body-tertiary">
             Aqui você adiciona e configura os usuários que fazem parte da sua equipe
@@ -125,7 +125,8 @@
                 <button type="button" class="btn btn-outline-primary w-100" (click)="close()">Fechar</button>
             </div>
             <div class="col-lg-6 mt-3 px-2">
-                <button type="submit" class="btn btn-primary w-100">Envia convite</button>
+                <button type="submit" class="btn btn-primary w-100">{{ data ? 'Salvar alterações' : 'Envia convite'
+                    }}</button>
             </div>
         </div>
     </form>

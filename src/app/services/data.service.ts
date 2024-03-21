@@ -9,7 +9,7 @@ export class DataService {
     usuarios: IUsuario[] = [
         {
             nome: 'Hero',
-            sobreNome: 'start',
+            sobreNome: 'Start',
             telefone: {
                 codigoDoPais: '+55',
                 numero: '9192935806'
@@ -17,116 +17,70 @@ export class DataService {
             email: 'heromail@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
+            perfis: ['analista, supervisor'],
             status: 'ativo',
             criadoEm: '2024-01-05T21:56:21.033+00:00',
             ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
         },
         {
-            nome: 'Hero',
-            sobreNome: 'start',
+            nome: 'Alice',
+            sobreNome: 'Wonder',
             telefone: {
                 codigoDoPais: '+55',
-                numero: '9192935806'
+                numero: '987654321'
             },
-            email: 'heromail@mail.com',
-            idioma: 'ing',
-            contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
+            email: 'alice@mail.com',
+            idioma: 'esp',
+            contatoPreferencial: 'email',
+            perfis: ['supervisor'],
             status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
+            criadoEm: '2024-02-15T10:30:45.123+00:00',
+            ultimoAcesso: '2024-03-10T18:20:15.567+00:00'
         },
         {
-            nome: 'Hero',
-            sobreNome: 'start',
+            nome: 'Jack',
+            sobreNome: 'Power',
             telefone: {
                 codigoDoPais: '+55',
-                numero: '9192935806'
+                numero: '876543210'
             },
-            email: 'heromail@mail.com',
-            idioma: 'ing',
+            email: 'jackpower@mail.com',
+            idioma: 'pt-br',
             contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
+            perfis: ['supervisor'],
             status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
+            criadoEm: '2024-02-28T14:45:30.987+00:00',
+            ultimoAcesso: '2024-03-18T09:12:34.876+00:00'
         },
         {
-            nome: 'Hero',
-            sobreNome: 'start',
+            nome: 'Maria',
+            sobreNome: 'Silva',
             telefone: {
                 codigoDoPais: '+55',
-                numero: '9192935806'
+                numero: '123456789'
             },
-            email: 'heromail@mail.com',
-            idioma: 'ing',
-            contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
+            email: 'maria.silva@mail.com',
+            idioma: 'pt-br',
+            contatoPreferencial: 'email',
+            perfis: ['analista'],
             status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
+            criadoEm: '2024-03-10T15:22:45.876+00:00',
+            ultimoAcesso: '2024-03-19T11:32:56.765+00:00'
         },
         {
-            nome: 'Hero',
-            sobreNome: 'start',
+            nome: 'Lucas',
+            sobreNome: 'Ferreira',
             telefone: {
                 codigoDoPais: '+55',
-                numero: '9192935806'
+                numero: '987612345'
             },
-            email: 'heromail@mail.com',
+            email: 'lucas.ferreira@mail.com',
             idioma: 'ing',
             contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
-            status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
-        },
-        {
-            nome: 'Hero',
-            sobreNome: 'start',
-            telefone: {
-                codigoDoPais: '+55',
-                numero: '9192935806'
-            },
-            email: 'heromail@mail.com',
-            idioma: 'ing',
-            contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
-            status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
-        },
-        {
-            nome: 'Hero',
-            sobreNome: 'start',
-            telefone: {
-                codigoDoPais: '+55',
-                numero: '9192935806'
-            },
-            email: 'heromail@mail.com',
-            idioma: 'ing',
-            contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
-            status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
-        },
-        {
-            nome: 'Hero',
-            sobreNome: 'start',
-            telefone: {
-                codigoDoPais: '+55',
-                numero: '9192935806'
-            },
-            email: 'heromail@mail.com',
-            idioma: 'ing',
-            contatoPreferencial: 'telefone',
-            perfis: ['usuario'],
-            status: 'ativo',
-            criadoEm: '2024-01-05T21:56:21.033+00:00',
-            ultimoAcesso: '2024-01-05T21:56:21.033+00:00'
-        },
+            perfis: ['analista'], status: 'ativo',
+            criadoEm: '2024-03-20T09:45:23.543+00:00',
+            ultimoAcesso: '2024-03-20T09:45:23.543+00:00'
+        }
     ];
 
     constructor() { }
@@ -134,7 +88,7 @@ export class DataService {
     add(usuario: IUsuario): Observable<any> {
         return new Observable((obs) => {
             try {
-                this.usuarios.push(usuario);
+                this.usuarios.unshift(usuario);
                 obs.next({
                     message: 'sucesso!',
                 });
@@ -148,15 +102,22 @@ export class DataService {
 
     list(search: any): Observable<any> {
         return new Observable((obs) => {
-            obs.next({
-                documentos: [...this.usuarios],
-                totalDocumentos: 0,
-                limite: 0,
-                totalPaginas: 0,
-                pagina: 0,
-                anterior: false,
-                proxima: false,
-            });
+            try {
+                obs.next({
+                    documentos: this.usuarios,
+                    totalDocumentos: 0,
+                    limite: 0,
+                    totalPaginas: 0,
+                    pagina: 0,
+                    anterior: false,
+                    proxima: false,
+                });
+            } catch {
+                obs.error({
+                    message: 'erro!'
+                });
+            }
+
         });
     }
 }

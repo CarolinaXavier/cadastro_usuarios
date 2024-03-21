@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -19,8 +19,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './form-usuario.component.html',
     styleUrls: ['./form-usuario.component.scss'],
 })
-export class FormUsuarioComponent {
-    @Input({ required: true }) isEdit: boolean = false;
+export class FormUsuarioComponent implements OnInit {
+    @Input({ required: true }) data!: IUsuario;
 
     form!: FormGroup;
     utilPaisIdioma = UtilPaisIdioma;
@@ -61,6 +61,12 @@ export class FormUsuarioComponent {
             ]),
             contatoPreferencial: new FormControl('todos', []),
         });
+    }
+
+    ngOnInit(): void {
+        if (this.data) {
+            this.form.patchValue(this.data, { emitEvent: false, onlySelf: true })
+        }
     }
 
     get formTelefone(): FormGroup {
