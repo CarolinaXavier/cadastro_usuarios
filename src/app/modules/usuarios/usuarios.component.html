@@ -41,10 +41,21 @@
                                 <span class="small fw-medium">Status</span>
                             </div>
                             <div class="align-self-center col mb-1 mb-lg-0">
-                                <span class="small fw-medium">Data de criação</span>
+                                <input class="invisible d-none" type="checkbox" id="criadoEm"
+                                    (click)="sortDocumentos($event, 'criadoEm')" [checked]="false" />
+                                <label class="" role="button" for="criadoEm">
+                                    <span class="small fw-medium">Data de criação</span>
+                                    <i class="bi bi-chevron-down p-0 ms-1"></i>
+                                </label>
                             </div>
                             <div class="align-self-center col mb-1 mb-lg-0">
-                                <span class="small fw-medium">Último acesso</span>
+
+                                <input class="invisible d-none" type="checkbox" id="ultimoAcesso"
+                                    (click)="sortDocumentos($event, 'ultimoAcesso')" [checked]="false" />
+                                <label class="" role="button" for="ultimoAcesso">
+                                    <span class="small fw-medium">Último acesso</span>
+                                    <i class="bi bi-chevron-down p-0 ms-1"></i>
+                                </label>
                             </div>
                             <div class="align-self-center col mb-0 mb-lg-0 col-lg-1">
                                 <span class="small fw-medium"></span>
@@ -93,6 +104,22 @@
                     </li>
                 </ul>
             </div>
+            <nav class="d-flex justify-content-end align-items-center mt-3">
+                <div class="gap-3 d-flex align-items-center flex-lg-row">
+
+                    <button type="button" class="btn btn-primary p-2 py-0 rounded-2" (click)="onControlePagina()">
+                        2
+                    </button>
+                    <div>
+                        <select class="form-select bg-white fw-medium text-body ps-2 pe-4 me-1 py-1"
+                            title="itens por página" [formControl]="controleLimite">
+                            <option value="5">5 itens por página</option>
+                            <option value="10">10 itens por página</option>
+                            <option value="20">20 itens por página</option>
+                        </select>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
 </section>

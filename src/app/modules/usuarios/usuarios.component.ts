@@ -1,10 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import {
-    FormBuilder,
-    FormGroup,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
     NgbModal,
     NgbModalOptions,
@@ -20,13 +16,14 @@ import {
     tap,
 } from 'rxjs';
 import { CustomValidators } from 'src/app/form-validators/custom.validator';
+import { IPaginacaoConfig } from 'src/app/interfaces/paginacao-config.interface';
 import { IPaginacao } from 'src/app/interfaces/paginacao.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { DataService } from 'src/app/services/data.service';
+import { PaginacaoConfigService } from 'src/app/services/paginacao-config.service';
 import { ConfirmaAcaoComponent } from 'src/app/shared/components/confirma-acao/confirma-acao.component';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
 import { filtrarArrayMultiKeyFunction } from 'src/app/utils/filtrar-array-multi-key-.function';
-
 import { obterPaginado } from 'src/app/utils/obter-paginado.function';
 import { removeAcentuacao } from 'src/app/utils/remove-acentuacao.function';
 
@@ -39,12 +36,14 @@ export class UsuariosComponent {
     data$!: Observable<IUsuario[]>;
     dataInit$!: Observable<IUsuario[]>;
     dataUpdate$!: Observable<IUsuario[]>;
-
     subjectUpdate: Subject<any> = new Subject<any>();
 
     form!: FormGroup;
+    controleSortData: FormControl = new FormControl(true);
+    controleLimite: FormControl = new FormControl(this.paginacaoConfigService.getConfig().limite);
 
     paginacao!: IPaginacao;
+    paginacaoConfig: IPaginacaoConfig = this.paginacaoConfigService.getConfig();
     private data!: any;
 
     modalOptions: NgbModalOptions = {
@@ -57,7 +56,8 @@ export class UsuariosComponent {
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
-        private dataService: DataService
+        private dataService: DataService,
+        private paginacaoConfigService: PaginacaoConfigService
     ) {
         this.dataInit$ = this.dataService.list({}).pipe();
         this.dataUpdate$ = this.subjectUpdate.asObservable().pipe(
@@ -69,7 +69,8 @@ export class UsuariosComponent {
         this.data$ = merge(this.dataInit$, this.dataUpdate$).pipe(
             tap((data) => {
                 this.data = data;
-                this.carregarPaginacao(1, 10);
+                this.carregarPaginacao(this.paginacaoConfig);
+                console.log(this.data)
             })
         );
 
@@ -81,16 +82,45 @@ export class UsuariosComponent {
         this.form.valueChanges
             .pipe(debounceTime(500), distinctUntilChanged())
             .subscribe((values: any) => {
-                this.carregarPaginacao(1, 10);
+                this.carregarPaginacao(this.paginacaoConfig);
             });
+
+        this.paginacaoConfigService.configChanges().subscribe((config) => {
+            this.paginacaoConfig = config;
+            if (this.data) {
+                this.carregarPaginacao(this.paginacaoConfig);
+            }
+        });
+
+        this.controleLimite.valueChanges.subscribe(value => {
+            this.paginacaoConfigService.setConfig({ limite: Number(value) });
+        })
     }
 
-    carregarPaginacao(pagina: number, limite: number): void {
+    carregarPaginacao(paginacaoConfig: IPaginacaoConfig): void {
         this.paginacao = obterPaginado(
             filtrarArrayMultiKeyFunction(this.data, this.extraiFiltros()),
-            pagina,
-            limite
+            paginacaoConfig.pagina,
+            paginacaoConfig.limite
         );
+    }
+
+    sortDocumentos(event: any, key: keyof IUsuario) {
+        if (event) {
+            if (event.target.checked) {
+                this.paginacao.documentos.sort((a: IUsuario, b: IUsuario) => {
+                    if (a[key] < b[key]) return 1;
+                    if (a[key] > b[key]) return -1;
+                    return 0;
+                });
+            } else {
+                this.paginacao.documentos.sort((a: IUsuario, b: IUsuario) => {
+                    if (a[key] > b[key]) return 1;
+                    if (a[key] < b[key]) return -1;
+                    return 0;
+                });
+            }
+        }
     }
 
     private extraiFiltros(): object {
@@ -112,6 +142,10 @@ export class UsuariosComponent {
             });
         }
         return filtros;
+    }
+
+    onControlePagina() {
+        this.paginacaoConfigService.setConfig({ pagina: 2 })
     }
 
     onAdd() {
