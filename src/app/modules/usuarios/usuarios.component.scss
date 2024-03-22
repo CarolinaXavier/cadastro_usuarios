@@ -8,8 +8,14 @@
     }
 }
 
+@media screen and (max-width: 991px) {
+    .w-auto.w-lg-auto {
+        width: 100% !important;
+    }
+}
+
 .ng-select.custom ::ng-deep {
-    background-color: var(--bs-white);   
+    background-color: var(--bs-white);
 }
 
 .ng-select.custom ::ng-deep .ng-select-container {

@@ -10,6 +10,7 @@ import { NavPaginacaoComponent } from './components/nav-paginacao/nav-paginacao.
 import { DinamicaImgBackgroundDirective } from './directives/dinamica-img-background.directive';
 import { NotificacaoComponent } from './components/notificacao/notificacao.component';
 import { AlertaComponent } from './components/notificacao/alerta/alerta.component';
+import { NadaPorAquiComponent } from './components/nada-por-aqui/nada-por-aqui.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AlertaComponent } from './components/notificacao/alerta/alerta.componen
     DinamicaImgBackgroundDirective,
     NotificacaoComponent,
     AlertaComponent,
+    NadaPorAquiComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { AlertaComponent } from './components/notificacao/alerta/alerta.componen
     NavPaginacaoComponent,
     DinamicaImgBackgroundDirective,
     NgSelectModule,
-    NotificacaoComponent
+    NotificacaoComponent,
+    NadaPorAquiComponent
   ],
   providers: [provideNgxMask()],
 })
