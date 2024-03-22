@@ -12,10 +12,17 @@ import { UtilPaisIdioma } from 'src/app/sources/pais-idioma.util';
 import { UtilPaisCodeTelefone } from 'src/app/sources/pais-code-telefone';
 import { DataService } from 'src/app/services/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbActiveModal,
+    NgbModal,
+    NgbModalRef,
+} from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/utils/utils';
 import { ConfirmaAcaoComponent } from '../confirma-acao/confirma-acao.component';
-
+import { NotificacaoModel } from 'src/app/models/notificacao.model';
+import { IInputsNotificacao } from 'src/app/interfaces/inputs-notificacao.interface';
+import { AlertaComponent } from '../notificacao/alerta/alerta.component';
+import { NotificacaoService } from 'src/app/services/notificacao.service';
 
 @Component({
     selector: 'app-form-usuario',
@@ -38,7 +45,8 @@ export class FormUsuarioComponent implements OnInit {
         protected formService: FormService,
         private dataService: DataService,
         private modalService: NgbModal,
-        private ngbActiveModal: NgbActiveModal
+        private ngbActiveModal: NgbActiveModal,
+        private notificacaoService: NotificacaoService
     ) {
         this.form = this.fb.group({
             nome: new FormControl(null, [
@@ -69,7 +77,7 @@ export class FormUsuarioComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.data) {
-            this.form.patchValue(this.data, { emitEvent: false, onlySelf: true })
+            this.form.patchValue(this.data, { emitEvent: false, onlySelf: true });
         }
     }
 
@@ -91,15 +99,18 @@ export class FormUsuarioComponent implements OnInit {
                         status: 'ativo',
                         criadoEm: now.toISOString(),
                         ultimoAcesso: now.toISOString(),
-                        cor: Utils.roundColor()
+                        cor: Utils.roundColor(),
                     } as IUsuario,
                     this.form.value
                 );
                 this.dataService.add(usuario).subscribe({
                     next: (response: any) => {
+                        this.gerarNotificacao(response.message, response.data);
                         this.ngbActiveModal.close(response);
                     },
                     error: (erro: HttpErrorResponse) => {
+                        this.gerarNotificacao(erro.message, erro.error.data, false);
+                        this.ngbActiveModal.close();
                         console.log(erro);
                     },
                     complete: () => { },
@@ -124,18 +135,19 @@ export class FormUsuarioComponent implements OnInit {
                             );
                             this.dataService.edit(usuario).subscribe({
                                 next: (response: any) => {
+                                    this.gerarNotificacao(response.message, response.data);
                                     this.ngbActiveModal.close(response);
                                 },
                                 error: (erro: HttpErrorResponse) => {
+                                    this.gerarNotificacao(erro.message, erro.error.data, false);
+                                    this.ngbActiveModal.close();
                                     console.log(erro);
                                 },
                                 complete: () => { },
                             });
                         }
                     },
-                    (reason) => {
-
-                    }
+                    (reason) => { }
                 );
             }
         } else {
@@ -145,5 +157,21 @@ export class FormUsuarioComponent implements OnInit {
 
     dismiss() {
         this.ngbActiveModal.dismiss();
+    }
+
+    gerarNotificacao(message: string, data: IUsuario, sucesso: boolean = true) {
+        this.notificacaoService.add(
+            new NotificacaoModel({
+                component: AlertaComponent,
+                inputs: {
+                    data: {
+                        tipo: sucesso ? 'sucesso' : 'fracasso',
+                        titulo: sucesso ? 'Sucesso!' : 'Fracasso!',
+                        message: message,
+                        data: data
+                    } as IInputsNotificacao,
+                },
+            })
+        );
     }
 }

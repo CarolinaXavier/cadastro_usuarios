@@ -16,14 +16,20 @@ export class DataService {
             try {
                 this.usuarios.unshift(usuario);
                 obs.next({
-                    message: 'sucesso!',
+                    message: 'Salvo com sucesso!',
+                    data: usuario,
                 });
             } catch {
                 obs.error({
-                    message: 'erro!',
+                    message: 'Erro em salvar!',
+                    error: { data: usuario },
                 });
             }
         });
+    }
+
+    get(_id: string) {
+        return this.usuarios.find((u) => u._id === _id);
     }
 
     edit(usuario: IUsuario): Observable<any> {
@@ -39,11 +45,13 @@ export class DataService {
                     return u;
                 });
                 obs.next({
-                    message: 'sucesso!',
+                    message: 'Sucesso em editar!',
+                    data: usuario,
                 });
             } catch {
                 obs.error({
-                    message: 'erro!',
+                    message: 'Erro em editar!',
+                    error: { data: usuario },
                 });
             }
         });
@@ -51,14 +59,17 @@ export class DataService {
 
     remove(_id: string): Observable<any> {
         return new Observable((obs) => {
+            const data = this.get(_id);
             try {
                 this.usuarios = this.usuarios.filter((u) => u._id !== _id);
                 obs.next({
-                    message: 'sucesso!',
+                    message: 'Removido com sucesso!',
+                    data: data
                 });
             } catch {
                 obs.error({
-                    message: 'erro!',
+                    message: 'Erro em remover!',
+                    error: { data: data },
                 });
             }
         });
@@ -67,12 +78,10 @@ export class DataService {
     list(search: any): Observable<any> {
         return new Observable((obs) => {
             try {
-                obs.next(
-                    this.usuarios,
-                );
+                obs.next(this.usuarios);
             } catch {
                 obs.error({
-                    message: 'erro!',
+                    message: 'Erro!',
                 });
             }
         });
