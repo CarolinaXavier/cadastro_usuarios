@@ -21,13 +21,17 @@ import {
     tap,
 } from 'rxjs';
 import { CustomValidators } from 'src/app/form-validators/custom.validator';
+import { IInputsNotificacao } from 'src/app/interfaces/inputs-notificacao.interface';
 import { IPaginacaoConfig } from 'src/app/interfaces/paginacao-config.interface';
 import { IPaginacao } from 'src/app/interfaces/paginacao.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
+import { NotificacaoModel } from 'src/app/models/notificacao.model';
 import { DataService } from 'src/app/services/data.service';
+import { NotificacaoService } from 'src/app/services/notificacao.service';
 import { PaginacaoConfigService } from 'src/app/services/paginacao-config.service';
 import { ConfirmaAcaoComponent } from 'src/app/shared/components/confirma-acao/confirma-acao.component';
 import { FormUsuarioComponent } from 'src/app/shared/components/form-usuario/form-usuario.component';
+import { AlertaComponent } from 'src/app/shared/components/notificacao/alerta/alerta.component';
 import { Utils } from 'src/app/utils/utils';
 
 @Component({
@@ -69,7 +73,8 @@ export class UsuariosComponent {
         private fb: FormBuilder,
         private modalService: NgbModal,
         private dataService: DataService,
-        private paginacaoConfigService: PaginacaoConfigService
+        private paginacaoConfigService: PaginacaoConfigService,
+        private notificacaoService: NotificacaoService
     ) {
         this.dataInit$ = this.dataService.list({}).pipe();
         this.dataUpdate$ = this.subjectUpdate.asObservable().pipe(
@@ -152,7 +157,7 @@ export class UsuariosComponent {
                 );
             } else {
                 return (
-                    ((Utils.removeAcentuacao(objeto.nome)
+                    (Utils.removeAcentuacao(objeto.nome)
                         .toUpperCase()
                         .includes(Utils.removeAcentuacao(nome).toUpperCase()) ||
                         Utils.removeAcentuacao(objeto.sobreNome)
@@ -160,7 +165,7 @@ export class UsuariosComponent {
                             .includes(Utils.removeAcentuacao(sobreNome).toUpperCase()) ||
                         Utils.removeAcentuacao(objeto.email)
                             .toUpperCase()
-                            .includes(Utils.removeAcentuacao(email).toUpperCase()))) &&
+                            .includes(Utils.removeAcentuacao(email).toUpperCase())) &&
                     status
                         ?.map((status: string) => status.toUpperCase())
                         .includes(objeto.status.toUpperCase())
@@ -188,7 +193,7 @@ export class UsuariosComponent {
             this.modalOptions
         );
         modalRef.result.then(
-            (result) => {
+            (result: any) => {
                 if (result) {
                     this.subjectUpdate.next({});
                 }
@@ -228,9 +233,11 @@ export class UsuariosComponent {
                 if (result) {
                     this.dataService.remove(usuario._id).subscribe({
                         next: (response: any) => {
+                            this.gerarNotificacao(response.message, response.data);
                             this.subjectUpdate.next({});
                         },
                         error: (erro: HttpErrorResponse) => {
+                            this.gerarNotificacao(erro.message, erro.error.data, false);
                             console.log(erro);
                         },
                         complete: () => { },
@@ -238,6 +245,22 @@ export class UsuariosComponent {
                 }
             },
             (reason) => { }
+        );
+    }
+
+    gerarNotificacao(message: string, data: IUsuario, sucesso: boolean = true) {
+        this.notificacaoService.add(
+            new NotificacaoModel({
+                component: AlertaComponent,
+                inputs: {
+                    data: {
+                        tipo: sucesso ? 'sucesso' : 'fracasso',
+                        titulo: sucesso ? 'Sucesso!' : 'Fracasso!',
+                        message: message,
+                        data: data
+                    } as IInputsNotificacao,
+                },
+            })
         );
     }
 }

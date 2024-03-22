@@ -8,6 +8,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmaAcaoComponent } from './components/confirma-acao/confirma-acao.component';
 import { NavPaginacaoComponent } from './components/nav-paginacao/nav-paginacao.component';
 import { DinamicaImgBackgroundDirective } from './directives/dinamica-img-background.directive';
+import { NotificacaoComponent } from './components/notificacao/notificacao.component';
+import { AlertaComponent } from './components/notificacao/alerta/alerta.component';
+import { NadaPorAquiComponent } from './components/nada-por-aqui/nada-por-aqui.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,9 @@ import { DinamicaImgBackgroundDirective } from './directives/dinamica-img-backgr
     ConfirmaAcaoComponent,
     NavPaginacaoComponent,
     DinamicaImgBackgroundDirective,
+    NotificacaoComponent,
+    AlertaComponent,
+    NadaPorAquiComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +36,9 @@ import { DinamicaImgBackgroundDirective } from './directives/dinamica-img-backgr
     CardTestimonyComponent,
     NavPaginacaoComponent,
     DinamicaImgBackgroundDirective,
-    NgSelectModule
+    NgSelectModule,
+    NotificacaoComponent,
+    NadaPorAquiComponent
   ],
   providers: [provideNgxMask()],
 })
