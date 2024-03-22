@@ -111,7 +111,7 @@ export class UsuariosComponent {
 
     carregarPaginacao(paginacaoConfig: IPaginacaoConfig): void {
         this.paginacao = Utils.obterPaginado(
-            Utils.filtrarArrayMultiKeyFunction(this.data, this.extraiFiltros()),
+            this.filtrarArray(this.extraiFiltros(), this.data),
             paginacaoConfig.pagina,
             paginacaoConfig.limite
         );
@@ -135,28 +135,47 @@ export class UsuariosComponent {
         }
     }
 
-    private extraiFiltros(): object {
-        let filtros = {};
-        if (this.form.controls['nome'].valid) {
-            Object.assign(filtros, {
-                nome: (key: any) =>
-                    Utils.removeAcentuacao(key.toUpperCase())?.includes(
-                        Utils.removeAcentuacao(this.form.value.nome?.toUpperCase())
-                    ),
-                /* email: (key: any) =>
-                    key.toUpperCase()?.includes(this.form.value.nome?.toUpperCase()), */
-            });
-        }
-        const statusValue: string[] = this.form.controls['status'].value;
-        if (this.form.controls['status'].valid && !statusValue.includes('todos')) {
-            Object.assign(filtros, {
-                status: (key: any) =>
-                    this.form.value.status
+    filtrarArray(objetivo: any, arrayDeObjetos: any[]): any[] {
+        const { nome, sobreNome, email, status } = objetivo;
+        return arrayDeObjetos.filter((objeto) => {
+            if (status.includes('todos') || !status.length) {
+                return (
+                    Utils.removeAcentuacao(objeto.nome)
+                        .toUpperCase()
+                        .includes(Utils.removeAcentuacao(nome).toUpperCase()) ||
+                    Utils.removeAcentuacao(objeto.sobreNome)
+                        .toUpperCase()
+                        .includes(Utils.removeAcentuacao(sobreNome).toUpperCase()) ||
+                    Utils.removeAcentuacao(objeto.email)
+                        .toUpperCase()
+                        .includes(Utils.removeAcentuacao(email).toUpperCase())
+                );
+            } else {
+                return (
+                    ((Utils.removeAcentuacao(objeto.nome)
+                        .toUpperCase()
+                        .includes(Utils.removeAcentuacao(nome).toUpperCase()) ||
+                        Utils.removeAcentuacao(objeto.sobreNome)
+                            .toUpperCase()
+                            .includes(Utils.removeAcentuacao(sobreNome).toUpperCase()) ||
+                        Utils.removeAcentuacao(objeto.email)
+                            .toUpperCase()
+                            .includes(Utils.removeAcentuacao(email).toUpperCase()))) &&
+                    status
                         ?.map((status: string) => status.toUpperCase())
-                        .includes(key.toUpperCase()),
-            });
-        }
-        return filtros;
+                        .includes(objeto.status.toUpperCase())
+                );
+            }
+        });
+    }
+
+    private extraiFiltros(): object {
+        return {
+            nome: this.form.value.nome,
+            sobreNome: this.form.value.nome,
+            email: this.form.value.nome,
+            status: this.form.value.status,
+        };
     }
 
     navegarParaPagina(event: any) {

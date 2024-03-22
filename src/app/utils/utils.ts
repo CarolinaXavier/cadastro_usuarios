@@ -59,16 +59,6 @@ export class Utils {
         };
     }
 
-    static filtrarArrayMultiKeyFunction(array: any, filters: any) {
-        const filterKeys = Object.keys(filters);
-        return array.filter((obj: any) => {
-            return filterKeys.every(key => {
-                if (typeof filters[key] !== 'function') return true;
-                return filters[key](obj[key]);
-            });
-        });
-    }
-
     static removeAcentuacao(texto: string) {
         if (!texto) { return '' }
         texto = texto.replace(/[ÀÁÂÃÄÅ]/, "A");
