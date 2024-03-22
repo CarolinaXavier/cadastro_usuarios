@@ -54,11 +54,11 @@
                             type="text" readonly formControlName="codigoDoPais" [ngStyle]="{'max-width' : '40px'}">
                         <div [ngSwitch]="utilPaisCodeTelefone[30].ddi" class="col">
                             <div *ngSwitchCase="formTelefone.value.codigoDoPais">
-                                <input class="form-control text-body border-start-0 rounded-start-0 w-auto-"
+                                <input class="form-control text-body border-start-0 rounded-start-0"
                                     type="text" formControlName="numero" mask="(00) 0000-0000" [validation]="false" />
                             </div>
                             <div *ngSwitchDefault>
-                                <input class="form-control text-body border-start-0 rounded-start-0 w-auto-"
+                                <input class="form-control text-body border-start-0 rounded-start-0"
                                     type="text" formControlName="numero" />
                             </div>
                         </div>

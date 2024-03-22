@@ -69,6 +69,8 @@ export class UsuariosComponent {
         { value: 'bloqueado' },
     ];
 
+    existeStatusTodos: boolean = true;
+
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
@@ -98,7 +100,16 @@ export class UsuariosComponent {
 
         this.form.valueChanges
             .pipe(debounceTime(500), distinctUntilChanged())
-            .subscribe((values: any) => {
+            .subscribe((value: any) => {
+                const statusControl = this.form.controls['status'];
+                if (value.status.includes('todos') && !this.existeStatusTodos) {
+                    this.existeStatusTodos = true;
+                    statusControl.patchValue(['todos']);
+                } else if (value.status.length > 1 && value.status.includes('todos') && this.existeStatusTodos) {
+                    this.existeStatusTodos = false;
+                    const newValue = value.status.filter((status: string) => status !== 'todos');
+                    statusControl.patchValue(newValue);
+                }
                 this.carregarPaginacao(this.paginacaoConfig);
             });
 
