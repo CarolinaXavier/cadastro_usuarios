@@ -28,7 +28,7 @@
                     Novo usuário
                 </button>
             </div>
-            <div *ngIf="paginacao.documentos.length; else nadaPorAqui">
+            <div *ngIf="paginacao.totalDocumentos > 0; else nadaPorAqui">
                 <div class="col-12">
                     <ul class="list-group rounded-3">
                         <li class="list-group-item p-3 bg-white">
