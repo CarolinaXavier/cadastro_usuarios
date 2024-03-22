@@ -50,11 +50,18 @@
                                     (click)="dropdownChange($event)">{{paisCodeTelefone.pais}}</a></li>
                         </ul>
                         <input
-                            class="form-control text-body border-start-0 border-end-0 border border-opacity-25 px-0 shadow-none d-none d-lg-block"
-                            type="text" readonly formControlName="codigoDoPais" style="width: 1rem;">
-                        <input class="form-control text-body border-start-0 w-auto" type="text" formControlName="numero"
-                            mask="(00) 0000-0000" [validation]="false" />
-
+                            class="form-control text-body border-start-0 border-end-0 border border-opacity-25 px-0 shadow-none bg-transparent d-none d-lg-block"
+                            type="text" readonly formControlName="codigoDoPais" [ngStyle]="{'max-width' : '40px'}">
+                        <div [ngSwitch]="+55" class="bg-transparent border-0 rounded-0">
+                            <div *ngSwitchCase="formTelefone.value.codigoDoPais">
+                                <input class="form-control text-body border-start-0 rounded-start-0 w-auto z-1"
+                                    type="text" formControlName="numero" mask="(00) 0000-0000" [validation]="false" />
+                            </div>
+                            <div *ngSwitchDefault>
+                                <input class="form-control text-body border-start-0 rounded-start-0 w-auto z-1"
+                                    type="text" formControlName="numero" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
