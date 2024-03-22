@@ -102,6 +102,9 @@ export class UsuariosComponent {
             .pipe(debounceTime(500), distinctUntilChanged())
             .subscribe((value: any) => {
                 const statusControl = this.form.controls['status'];
+                if(!statusControl.value.length){
+                    this.existeStatusTodos = false;
+                }
                 if (value.status.includes('todos') && !this.existeStatusTodos) {
                     this.existeStatusTodos = true;
                     statusControl.patchValue(['todos']);
