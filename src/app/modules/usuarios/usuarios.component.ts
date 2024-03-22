@@ -94,26 +94,11 @@ export class UsuariosComponent {
         this.form = this.fb.group({
             nome: ['', [Validators.required, CustomValidators.notEmpty]],
             status: [['todos'], [Validators.required]],
-            statusCopy: [['copy'], [Validators.required]],
         });
 
         this.form.valueChanges
             .pipe(debounceTime(500), distinctUntilChanged())
-            .subscribe((value: any) => {
-
-                const statusCopy = this.form.controls['copy'];
-                const statusControl = this.form.controls['status'];
-
-                if(!statusCopy.value){
-                    
-                }
-
-                /* if (value.status.length > 1 && value.status.includes('todos')) {
-                    const newValue = value.status.filter((status: string) => status !== 'todos');
-                    statusControl.patchValue(newValue);
-                  }
-                  console.log('form: ', this.form.value) */
-
+            .subscribe((values: any) => {
                 this.carregarPaginacao(this.paginacaoConfig);
             });
 
