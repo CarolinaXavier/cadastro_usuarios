@@ -44,7 +44,7 @@
                             </div>
 
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu overflow-y-auto rounded-3" [ngStyle]="{'max-height' : '40vh'}">
                             <li><a class="dropdown-item" role="button" id="{{paisCodeTelefone.ddi}}"
                                     *ngFor="let paisCodeTelefone of utilPaisCodeTelefone"
                                     (click)="dropdownChange($event)">{{paisCodeTelefone.pais}}</a></li>
