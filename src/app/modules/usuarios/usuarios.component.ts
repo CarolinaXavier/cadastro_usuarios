@@ -143,8 +143,8 @@ export class UsuariosComponent {
                     Utils.removeAcentuacao(key.toUpperCase())?.includes(
                         Utils.removeAcentuacao(this.form.value.nome?.toUpperCase())
                     ),
-                email: (key: any) =>
-                    key.toUpperCase()?.includes(this.form.value.nome?.toUpperCase()),
+                /* email: (key: any) =>
+                    key.toUpperCase()?.includes(this.form.value.nome?.toUpperCase()), */
             });
         }
         const statusValue: string[] = this.form.controls['status'].value;
